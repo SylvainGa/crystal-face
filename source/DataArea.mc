@@ -78,8 +78,23 @@ class DataArea extends Ui.Drawable {
 
 			// If available, use city returned from web request; otherwise, use raw city from settings.
 			// N.B. error response will NOT contain city.
-			if ((cityLocalTime != null) && (cityLocalTime["city"] != null)) {
-				city = cityLocalTime["city"];
+			if ((cityLocalTime != null) && (cityLocalTime["timezone"] != null)) {
+				city = cityLocalTime["timezone"];
+			}
+
+			// Only keep the city for the display, not the continent 
+			var slashPos = city.find("/");
+
+			// Drop underscore from name
+			var array = city.toCharArray();
+			var city_mod = "";
+			for (var i = 0; i < array.size(); i++) {
+				if (array[i] == '_') {
+					city_mod = city_mod + " ";
+				}
+				else {
+					city_mod = city_mod + array[i].toString();
+				}
 			}
 
 			// Time zone 1 city.
@@ -89,7 +104,7 @@ class DataArea extends Ui.Drawable {
 				mRow1Y,
 				gNormalFont,
 				// Limit string length.
-				city.substring(0, 10),
+				city_mod.substring(slashPos + 1, slashPos + 11),
 				Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
 			);
 
@@ -106,11 +121,16 @@ class DataArea extends Ui.Drawable {
 				} else {
 					var timeZoneGmtOffset;
 
-					// Use next GMT offset if it's now applicable (new data will be requested shortly).
-					if ((cityLocalTime["next"] != null) && (Time.now().value() >= cityLocalTime["next"]["when"])) {
-						timeZoneGmtOffset = cityLocalTime["next"]["gmtOffset"];
-					} else {
-						timeZoneGmtOffset = cityLocalTime["current"]["gmtOffset"];
+					// // Use next GMT offset if it's now applicable (new data will be requested shortly).
+					// if ((cityLocalTime["next"] != null) && (Time.now().value() >= cityLocalTime["next"]["when"])) {
+					// 	timeZoneGmtOffset = cityLocalTime["next"]["gmtOffset"];
+					// } else {
+					// 	timeZoneGmtOffset = cityLocalTime["current"]["gmtOffset"];
+					// }
+
+					timeZoneGmtOffset = cityLocalTime["raw_offset"];
+					if (cityLocalTime["dst"]) {
+						timeZoneGmtOffset = timeZoneGmtOffset + cityLocalTime["dst_offset"];
 					}
 					timeZoneGmtOffset = new Time.Duration(timeZoneGmtOffset);
 					

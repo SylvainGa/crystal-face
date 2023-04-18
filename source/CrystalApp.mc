@@ -145,23 +145,21 @@ class CrystalApp extends App.AppBase {
 		
 		// #78 Setting with value of empty string may cause corresponding property to be null.
 		if ((city != null) && (city.length() > 0)) {
-
 			var cityLocalTime = Storage.getValue("CityLocalTime");
-
-			// No existing data.
-			if ((cityLocalTime == null) ||
-
-			// Existing data is old.
-			((cityLocalTime["next"] != null) && (Time.now().value() >= cityLocalTime["next"]["when"]))) {
-
+			var now = new Time.Moment(Time.now().value());
+			var now_value = now.value();
+			var next_value = cityLocalTime["next"];
+			
+			//  No existing data      or Some data is missing          or Existing data is old
+			if (cityLocalTime == null || cityLocalTime["next"] == null || now.value() >= cityLocalTime["next"]) {
 				pendingWebRequests["CityLocalTime"] = true;
-		
+			}
 			// Existing data not for this city: delete it.
 			// Error response from server: contains requestCity. Likely due to unrecognised city. Prevent requesting this
 			// city again.
-			} else if (!cityLocalTime["requestCity"].equals(city)) {
+			else if (!cityLocalTime["timezone"].equals(city)) {
 
-				deleteProperty("CityLocalTime");
+				Storage.deleteValue("CityLocalTime");
 				pendingWebRequests["CityLocalTime"] = true;
 			}
 		}

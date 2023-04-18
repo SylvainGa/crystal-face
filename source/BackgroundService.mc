@@ -82,14 +82,9 @@ class BackgroundService extends Sys.ServiceDelegate {
 
 			// 1. City local time.
 			if (pendingWebRequests["CityLocalTime"] != null) {
-				makeWebRequest(
-					"https://script.google.com/macros/s/AKfycbwPas8x0JMVWRhLaraJSJUcTkdznRifXPDovVZh8mviaf8cTw/exec",
-					{
-						"city" => Properties.getValue("LocalTimeInCity")
-					},
-					method(:onReceiveCityLocalTime)
-				);
-
+				var location = Properties.getValue("LocalTimeInCity");
+				var url = "https://worldtimeapi.org/api/timezone/" + location;
+				makeWebRequest(url, {}, method(:onReceiveCityLocalTime));
 			} 
 
 			// 2. Weather.
@@ -170,7 +165,38 @@ class BackgroundService extends Sys.ServiceDelegate {
 
 		// HTTP failure: return responseCode.
 		// Otherwise, return data response.
-		if (responseCode != 200) {
+		// 0123456789012345678901234
+		// 2023-03-12T07:00:00+00:00
+		if (responseCode == 200) {
+			var dst_from = Gregorian.moment({
+				:year => data.get("dst_from").substring( 0, 4).toNumber(),
+				:month => data.get("dst_from").substring( 5, 7).toNumber(),
+				:day => data.get("dst_from").substring( 8, 10).toNumber(),
+				:hour => data.get("dst_from").substring(11, 13).toNumber(),
+				:minute => data.get("dst_from").substring(14, 16).toNumber(),
+				:second => data.get("dst_from").substring(17, 19).toNumber()
+				});
+			var dst_until = Gregorian.moment({
+				:year => data.get("dst_until").substring( 0, 4).toNumber(),
+				:month => data.get("dst_until").substring( 5, 7).toNumber(),
+				:day => data.get("dst_until").substring( 8, 10).toNumber(),
+				:hour => data.get("dst_until").substring(11, 13).toNumber(),
+				:minute => data.get("dst_until").substring(14, 16).toNumber(),
+				:second => data.get("dst_until").substring(17, 19).toNumber()
+				});
+
+			var now = new Time.Moment(Time.now().value());
+			if (now.lessThan(dst_from)) {
+				data.put("next", dst_from.value());
+			}
+			else if (now.lessThan(dst_until)) {
+				data.put("next", dst_until.value());
+			}
+			else {
+				data.put("next", dst_from.value());
+			}
+		}
+		else {
 			data = {
 				"httpError" => responseCode
 			};
