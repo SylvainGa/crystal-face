@@ -33,7 +33,7 @@ var gNormalFont;
 var gIconsFont;
 
 var gStressLevel;
-/*DEBUG*/ var gStressLevelLogText;
+//DEBUG*/ var gStressLevelLogText;
 
 const SCREEN_MULTIPLIER = (Sys.getDeviceSettings().screenWidth < 360) ? 1 : 2;
 //const BATTERY_LINE_WIDTH = 2;
@@ -646,6 +646,7 @@ class CrystalView extends Ui.WatchFace {
 		// If turning off burn-in protection, recache regular watch face drawables.
 		if (mBurnInProtectionChangedSinceLastDraw) {
 			mBurnInProtectionChangedSinceLastDraw = false;
+			//DEBUG*/ logMessage("mIsBurnInProtection is " + mIsBurnInProtection);
 			setLayout(mIsBurnInProtection ? Rez.Layouts.AlwaysOn(dc) : Rez.Layouts.WatchFace(dc));
 			cacheDrawables();
 		}
@@ -927,8 +928,12 @@ class CrystalView extends Ui.WatchFace {
 		// If watch requires burn-in protection, set flag to false when entering sleep.
 		var settings = Sys.getDeviceSettings();
 		if (settings has :requiresBurnInProtection && settings.requiresBurnInProtection) {
+			//DEBUG*/ logMessage("onExitSleep with needing burning proctection");
 			mIsBurnInProtection = false;
 			mBurnInProtectionChangedSinceLastDraw = true;
+		}
+		else {
+			//DEBUG*/ logMessage("onExitSleep without needing burning proctection");
 		}
 	}
 
@@ -950,8 +955,12 @@ class CrystalView extends Ui.WatchFace {
 		// If watch requires burn-in protection, set flag to true when entering sleep.
 		var settings = Sys.getDeviceSettings();
 		if (settings has :requiresBurnInProtection && settings.requiresBurnInProtection) {
+			//DEBUG*/ logMessage("onEnterSleep with needing burning proctection");
 			mIsBurnInProtection = true;
 			mBurnInProtectionChangedSinceLastDraw = true;
+		}
+		else {
+			//DEBUG*/ logMessage("onEnterSleep without needing burning proctection");
 		}
 
 		Ui.requestUpdate();
