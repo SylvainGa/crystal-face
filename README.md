@@ -27,6 +27,10 @@ Reviews:
 
 ## Below is what has been added by me (SylvainGa).
 
+### 2.17.3
+- Main change is the hardening of the Properties reading to fix a crash (crash caused by the new Complication checkbox in Settings on some watches)
+- Replaced the T letter before the Tesla's battery charge in AlwaysOnDisplays to the Tesla Symbol
+
 ### 2.17.2
 - Made Complications an optional item, disabled by default since some watches are not reading them properly. Settable through Settings
 - Adjusted the touch points around the Fields, Indicators and Goals value.
