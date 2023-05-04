@@ -416,13 +416,13 @@ class CrystalView extends Ui.WatchFace {
 
 		// If we were told to ignore complications, do so (but technicaly, we shouldn't get here as we shouldn't be listening in the first place!)
 		if (!mUseComplications) {
-			/*DEBUG*/ logMessage("How did we get here, we're not supposed to be listening!");
+			//DEBUG*/ logMessage("How did we get here, we're not supposed to be listening!");
 			return;
 		}
 
 		// I've seen this while in low power mode, so skip it
 		if (complicationValue == null) {
-			/*DEBUG*/ logMessage("We got a Complication value of null for " + complicationType);
+			//DEBUG*/ logMessage("We got a Complication value of null for " + complicationType);
 			return;
 		}
 
@@ -905,12 +905,12 @@ class CrystalView extends Ui.WatchFace {
 		// crash in GoalMeter.getSegmentScale().
 		// Sanity check. I've seen weird Invalid Value and "System Error" in DataArea.setGoalValues:48 and :61. Make sure the data is valid
 		if (values[:isValid] && (!(values[:max] instanceof Lang.Number || values[:max] instanceof Lang.Float) || values[:max] < 1)) {
-			/*DEBUG*/ logMessage("values[:max] is invalid=" + values[:max]);
+			//DEBUG*/ logMessage("values[:max] is invalid=" + values[:max]);
 			values[:max] = 1;
 			values[:isValid] = false;
 		}
 		if (values[:isValid] && (!(values[:current] instanceof Lang.Number || values[:current] instanceof Lang.Float))) {
-			/*DEBUG*/ logMessage("values[:current] is invalid=" + values[:current]);
+			//DEBUG*/ logMessage("values[:current] is invalid=" + values[:current]);
 			values[:current] = 0;
 			values[:isValid] = false;
 		}
@@ -1029,7 +1029,7 @@ class CrystalDelegate extends Ui.WatchFaceDelegate {
 
 	public function onPress(clickEvent as Ui.ClickEvent) as Lang.Boolean {
 		var co_ords = clickEvent.getCoordinates();
-        /*DEBUG*/ logMessage("onPress called with x:" + co_ords[0] + ", y:" + co_ords[1]);
+        //DEBUG*/ logMessage("onPress called with x:" + co_ords[0] + ", y:" + co_ords[1]);
 
 		// returns the complicationId within the boundingBoxes
 		if (Toybox has :Complications && App.getApp().getView().useComplications()) {
@@ -1136,11 +1136,11 @@ class CrystalDelegate extends Ui.WatchFaceDelegate {
 
 	function isWithin(x, y, startX, startY, spacingX, spacingY, field) {
 		if (x > startX && x < startX + spacingX && y > startY and y < startY + spacingY) {
-			/*DEBUG*/ logMessage("True:  " + x + "/" + y + " is within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
+			//DEBUG*/ logMessage("True:  " + x + "/" + y + " is within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
 			return field;
 		}
 		else {
-			/*DEBUG*/ logMessage("False:  " + x + "/" + y + " is NOT within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
+			//DEBUG*/ logMessage("False:  " + x + "/" + y + " is NOT within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
 			return "";
 		}
 	}
