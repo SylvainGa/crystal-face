@@ -27,6 +27,10 @@ Reviews:
 
 ## Below is what has been added by me (SylvainGa).
 
+### 2.17.5
+- When reading properties, if they don't exist (why?!?), they'll be created with the default value in them
+- Fix the lightTheme checkbox not being read correctly
+
 ### 2.17.4
 - One more attempt at fixing the crash because of the Settings change since 2.17.1
 

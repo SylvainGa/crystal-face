@@ -198,109 +198,40 @@ class CrystalApp extends App.AppBase {
 //******** REMVOVED THIS SECTION IF TESLA CODE NOT WANTED ********
 //****************************************************************
 		if (Storage.getValue("Tesla") != null) {
-			var TeslaInfo = Storage.getValue("TeslaInfo");
-			if (TeslaInfo == null) { // We're not doing Tesla stuff so why asking for it, clear that
+			var teslaInfo = Storage.getValue("TeslaInfo");
+			if (teslaInfo == null) { // We're not doing Tesla stuff so why asking for it, clear that
 				pendingWebRequests["TeslaInfo"] = false;
 			} else { // We're doing Tesla stuff
-				var batterie_level = null; 
-				var charging_state = null;
-				var batterie_stale = false;
-				var carAsleep = false;
-				
-				// First handle errors, setting batterie_level to "N/A" if the query returned a vehicle not found.
-				// If we failed to get access, maybe our token has expired, clear it so next time the background process runs, it will refresh it
-				// Other errors are silent for now
-				var result = TeslaInfo["httpErrorTesla"];
-				if (result != null) {
-					if (result == 400 || result == 401) { // Our token has expired, refresh it
-						Properties.setValue("TeslaAccessToken", null); // Try to get a new vehicleID
-						batterie_stale = true;
-					} else if (result == 404) { // We got an vehicle not found error, reset our vehicle ID
-						Storage.setValue("TeslaVehicleID", null); // Try to get a new vehicleID
-						batterie_stale = true;
-					} else if (result == 408) { // Car is aslepep keep the old data but stop charging if it still was before going to sleep
-						carAsleep = true;
-					}
-					else {
-						batterie_stale = true;
-					}
-					Storage.setValue("TeslaError", result);
-				}
-				
-				// Check if our access token was refreshed. If so, store the new access and refresh tokens
-				result = TeslaInfo["Token"];
-				if (result != null) {
-					var accessToken = result["access_token"];
-					var refreshToken = result["refresh_token"];
-					var expires_in = result["expires_in"];
-					var created_at = Time.now().value(); 
-					Properties.setValue("TeslaAccessToken", accessToken);
-					if (refreshToken != null && refreshToken.equals("") == false) { // Only if we received a refresh tokem
-						Properties.setValue("TeslaRefreshToken", refreshToken);
-					}
-					Storage.setValue("TeslaTokenExpiresIn", expires_in);
-					Storage.setValue("TeslaTokenCreatedAt", created_at);
+				// Move what needs to be outside of TeslaInfo
+				var arrayKey = ["RefreshToken", "AccessToken", "TokenCreatedAt", "TokenExpiresIn", "VehicleID"];
+				var arrayProp = [true, true, false, false, false ];
 
-					Storage.setValue("TeslaError", null);
-				}
-
-				// If the car isn't asleep and we didn't get an error, read what was returned
-				else if (!carAsleep && !batterie_stale) {
-					var batterie_state = TeslaInfo["battery_state"];
-					if (batterie_state) {
-						batterie_level = batterie_state["battery_level"]; 
-						charging_state = batterie_state["charging_state"];
-					}
-
-					var inside_temp = TeslaInfo["inside_temp"];
-					if (inside_temp != null) {
-						Storage.setValue("TeslaInsideTemp", inside_temp.toString());
-					}
-					
-					var precond_enabled = TeslaInfo["preconditioning"];
-					if (precond_enabled != null) {
-						Storage.setValue("TeslaPreconditioning", precond_enabled.toString());
-					}
-
-					var sentry_enabled = TeslaInfo["sentry_enabled"];
-					if (sentry_enabled != null) {
-						Storage.setValue("TeslaSentryEnabled", sentry_enabled.toString());
-					}
-
-					// Read its vehicleID. If we don't have one, clear our property so the next call made by the background process will try to retrieve it.
-					// If we have no vehicle, set the batterie level to N/A
-					var vehicle_id = TeslaInfo["vehicle_id"];
-					if (vehicle_id != null) { // We got our vehicle ID. Store it for future use in the background process
-						if (vehicle_id != 0) {
-							Storage.setValue("TeslaVehicleID", vehicle_id.toString());
-						} else {
-							Storage.setValue("TeslaVehicleID", null);
-							batterie_stale = true;
-							batterie_level = "N/A";
+				for (var i = 0; i < arrayKey.size(); i++) {
+					var value = teslaInfo.get(arrayKey[i]);
+					if (value != null) {
+						if (arrayProp[i]) {
+							Properties.setValue("Tesla" + arrayKey[i], value);
 						}
-					} else {
-						batterie_stale = true;
+						else {
+							Storage.setValue("Tesla" + arrayKey[i], value);
+						}
+						teslaInfo.remove(arrayKey[i]);
 					}
-
-					// Here batterie_level is the same as what was read earlier or changed to N/A for some reason above.
-					if (batterie_level  != null) {
-						Storage.setValue("TeslaBatterieLevel", batterie_level);
-						Storage.setValue("TeslaBatterieStale", batterie_stale);
-						Storage.setValue("TeslaChargingState", charging_state);
-
-						Storage.setValue("TeslaError", null);
-						
-					} else {
-						Storage.setValue("TeslaBatterieStale", true);
-						Storage.setValue("TeslaError", null);
-					}
-				} else if (!batterie_stale) { // Car is asleap, say so
-					Storage.setValue("TeslaChargingState", "Sleeping");
-					Storage.setValue("TeslaBatterieStale", false);
-					Storage.setValue("TeslaError", null);
 				}
-				
-				pendingWebRequests["TeslaInfo"] = true;
+
+				// We deal with specific errors here, leaving the good stuff to the battery indicator
+				var result = teslaInfo["httpErrorTesla"];
+				if (result != null) {
+					if (result == 401) { // Our token has expired and we were unable to get one from within onReceiveVehicleData, refresh it
+						Properties.setValue("TeslaAccessToken", null); // Try to get a new vehicleID
+					} else if (result == 404) { // We got an vehicle not found error and we were unable to get one from within onReceiveVehicleData, reset our vehicle ID
+						Storage.remove("VehicleID"); // Try to get a new vehicleID
+					}
+
+					Storage.setValue("TeslaInfo", teslaInfo);
+				}
+
+				pendingWebRequests["TeslaInfo"] = true; // We ask for new data at every launch of the temporal event
 			}
 		}
 		else {
@@ -344,16 +275,36 @@ class CrystalApp extends App.AppBase {
 		}
 
 		var type = data.keys()[0]; // Type of received data.
-		var storedData = Storage.getValue(type);
 		var receivedData = data[type]; // The actual data received: strip away type key.
 		
 		// Do process the data if what we got was an error
 		if (receivedData["httpError"] == null) {
 			// New data received: clear pendingWebRequests flag and overwrite stored data.
-			storedData = receivedData;
 			pendingWebRequests.remove(type);
 			Storage.setValue("PendingWebRequests", pendingWebRequests);
-			Storage.setValue(type, storedData);
+
+			if (type.equals("TeslaInfo")) {
+				// TeslaInfo is refeshed, not overwritten
+				var storedData = Storage.getValue(type);
+				if (storedData == null) {
+					storedData = {};
+				}
+
+                var keys = receivedData.keys();
+                var values = receivedData.values();
+
+				for (var i = 0; i < keys.size(); i++) {
+					storedData.put(keys[i], values[i]);
+				}
+				Storage.setValue(type, storedData);
+			}
+			else {
+				Storage.setValue(type, receivedData);
+			}
+
+			if (type.equals("OpenWeatherMapCurrent")) {
+				Storage.setValue("NewOpenWeatherMapCurrent", true);
+			}
 	
 			checkPendingWebRequests(); // We just got new data, process them right away before displaying
 		}
@@ -403,14 +354,24 @@ class CrystalApp extends App.AppBase {
 (:background)
 function getIntProperty(key, defaultValue) {
 	var value;
+	var exception;
 
 	try {
+		exception = false;
 		value = Properties.getValue(key);
 	}
 	catch (e) {
+		exception = true;
 		value = defaultValue;
 	}
 
+	if (exception) {
+		try {
+			Properties.setValue(key, defaultValue);
+		}
+		catch (e) {
+		}
+	}
 	return validateNumber(value, defaultValue);
 }
 
@@ -435,12 +396,23 @@ function validateNumber(value, defaultValue) {
 (:background)
 function getFloatProperty(key, defaultValue) {
 	var value;
+	var exception;
 
 	try {
+		exception = false;
 		value = Properties.getValue(key);
 	}
 	catch (e) {
+		exception = true;
 		value = defaultValue;
+	}
+
+	if (exception) {
+		try {
+			Properties.setValue(key, defaultValue);
+		}
+		catch (e) {
+		}
 	}
 	return validateFloat(value, defaultValue);
 }
@@ -466,12 +438,23 @@ function validateFloat(value, defaultValue) {
 (:background)
 function getStringProperty(key, defaultValue) {
 	var value;
+	var exception;
 
 	try {
+		exception = false;
 		value = Properties.getValue(key);
 	}
 	catch (e) {
+		exception = true;
 		value = defaultValue;
+	}
+
+	if (exception) {
+		try {
+			Properties.setValue(key, defaultValue);
+		}
+		catch (e) {
+		}
 	}
 	return validateString(value, defaultValue);
 }
@@ -497,14 +480,24 @@ function validateString(value, defaultValue) {
 (:background)
 function getBoolProperty(key, defaultValue) {
 	var value;
+	var exception;
 
 	try {
+		exception = false;
 		value = Properties.getValue(key);
 	}
 	catch (e) {
+		exception = true;
 		value = defaultValue;
 	}
 
+	if (exception) {
+		try {
+			Properties.setValue(key, defaultValue);
+		}
+		catch (e) {
+		}
+	}
 	return validateBoolean(value, defaultValue);
 }
 
