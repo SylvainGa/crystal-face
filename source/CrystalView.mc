@@ -145,7 +145,7 @@ class CrystalView extends Ui.WatchFace {
 	// the state of this View and prepare it to be shown. This includes
 	// loading resources into memory. */
 	function onShow() {
-		/*DEBUG*/ logMessage("View showing");
+		//DEBUG*/ logMessage("View showing");
 	}
 
 	// Set flag to respond to settings change on next full draw (onUpdate()), as we may be in 1Hz (lower power) mode, and cannot
@@ -291,14 +291,14 @@ class CrystalView extends Ui.WatchFace {
 				//logMessage("icon=" + icon); 
 			}
 			else {
-				/*DEBUG*/ logMessage("Icon index " + condition + " is invalid");
+				//DEBUG*/ logMessage("Icon index " + condition + " is invalid");
 			}
 			result = { "cod" => 200, "temp" => temperature, "humidity" => humidity, "icon" => icon };
-			/*DEBUG*/ logMessage("Weather at " + mWeatherStationName + " is " + result);
+			//DEBUG*/ logMessage("Weather at " + mWeatherStationName + " is " + result);
 		}
 		else {
 			result = { "cod" => 404 };
-			/*DEBUG*/ logMessage("No weather data, returning cod = 404");
+			//DEBUG*/ logMessage("No weather data, returning cod = 404");
 		}
 		Storage.setValue("WeatherInfo", result);
 		Storage.setValue("NewWeatherInfo", true);
@@ -622,12 +622,12 @@ class CrystalView extends Ui.WatchFace {
 		// crash in GoalMeter.getSegmentScale().
 		// Sanity check. I've seen weird Invalid Value and "System Error" in DataArea.setGoalValues:48 and :61. Make sure the data is valid
 		if (values[:isValid] && (!(values[:max] instanceof Lang.Number || values[:max] instanceof Lang.Float) || values[:max] < 1)) {
-			/*DEBUG*/ logMessage("values[:max] is invalid=" + values[:max]);
+			//DEBUG*/ logMessage("values[:max] is invalid=" + values[:max]);
 			values[:max] = 1;
 			values[:isValid] = false;
 		}
 		if (values[:isValid] && (!(values[:current] instanceof Lang.Number || values[:current] instanceof Lang.Float))) {
-			/*DEBUG*/ logMessage("values[:current] is invalid=" + values[:current]);
+			//DEBUG*/ logMessage("values[:current] is invalid=" + values[:current]);
 			values[:current] = 0;
 			values[:isValid] = false;
 		}
@@ -649,7 +649,7 @@ class CrystalView extends Ui.WatchFace {
 	// state of this View here. This includes freeing resources from
 	// memory */
 	function onHide() {
-		/*DEBUG*/ logMessage("View hidding");
+		//DEBUG*/ logMessage("View hidding");
 	}
 
 	// The user has just looked at their watch. Timers and animations may be started here.
@@ -779,7 +779,7 @@ class CrystalDelegate extends Ui.WatchFaceDelegate {
 
 	public function onPress(clickEvent as Ui.ClickEvent) as Lang.Boolean {
 		var co_ords = clickEvent.getCoordinates();
-        /*DEBUG*/ logMessage("onPress called with x:" + co_ords[0] + ", y:" + co_ords[1]);
+        //DEBUG*/ logMessage("onPress called with x:" + co_ords[0] + ", y:" + co_ords[1]);
 
 		// returns the complicationId within the boundingBoxes
 		if (Toybox has :Complications && App.getApp().getView().useComplications()) {
@@ -886,11 +886,11 @@ class CrystalDelegate extends Ui.WatchFaceDelegate {
 
 	function isWithin(x, y, startX, startY, spacingX, spacingY, field) {
 		if (x > startX && x < startX + spacingX && y > startY and y < startY + spacingY) {
-			/*DEBUG*/ logMessage("True:  " + x + "/" + y + " is within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
+			//DEBUG*/ logMessage("True:  " + x + "/" + y + " is within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
 			return field;
 		}
 		else {
-			/*DEBUG*/ logMessage("False:  " + x + "/" + y + " is NOT within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
+			//DEBUG*/ logMessage("False:  " + x + "/" + y + " is NOT within " + startX + "/" + startY + " and " + (startX + spacingX).toString() + "/" + (startY + spacingY).toString());
 			return "";
 		}
 	}
