@@ -25,16 +25,16 @@ class CrystalApp extends App.AppBase {
 	}
 
 	// function onStart(state) {
-	// 	/*DEBUG*/ logMessage("App starting");
+	// 	//DEBUG*/ logMessage("App starting");
 	// }
 
 	// function onStop(state) {
-	// 	/*DEBUG*/ logMessage("App stopping");
+	// 	//DEBUG*/ logMessage("App stopping");
 	// }
 
 	// Return the initial view of your application here
 	function getInitialView() {
-		/*DEBUG*/ logMessage("Getting initial view");
+		//DEBUG*/ logMessage("Getting initial view");
 
 		if (WatchUi has :WatchFaceDelegate) {
 			mView = new CrystalView();
@@ -56,7 +56,7 @@ class CrystalApp extends App.AppBase {
 	// New app settings have been received so trigger a UI update
 	(:background)
 	function getServiceDelegate() {
-		/*DEBUG*/ logMessage("Getting service delegate");
+		//DEBUG*/ logMessage("Getting service delegate");
 		return [new BackgroundService()];
 	}
 
@@ -102,7 +102,7 @@ class CrystalApp extends App.AppBase {
 			}
 		}
 		else {
-			/*DEBUG*/ logMessage("Unexpected invalid receivedData: " + receivedData);
+			//DEBUG*/ logMessage("Unexpected invalid receivedData: " + receivedData);
 		}
 
 		// Copy into their own name some of the entries in TeslaInfo, then delete from TeslaInfo
@@ -135,7 +135,7 @@ class CrystalApp extends App.AppBase {
 			}
 		}
 
-		/*DEBUG*/ var nextTime = Time.now().add(new Time.Duration(5 * 60)); var local = Gregorian.info(nextTime, Time.FORMAT_SHORT); var time = $.getFormattedTime(local.hour, local.min, local.sec); 		logMessage("Next temporal event at " + time[:hour] + ":" + time[:min] + ":" + time[:sec] + time[:amPm]);
+		//DEBUG*/ var nextTime = Time.now().add(new Time.Duration(5 * 60)); var local = Gregorian.info(nextTime, Time.FORMAT_SHORT); var time = $.getFormattedTime(local.hour, local.min, local.sec); 		logMessage("Next temporal event at " + time[:hour] + ":" + time[:min] + ":" + time[:sec] + time[:amPm]);
 		Bg.registerForTemporalEvent(new Time.Duration(5 * 60)); // Since onSettingsChanged go for a specific time, go for duration here once we get going, otherwise we'll get background data only once the view is shown
 
 		Ui.requestUpdate();
