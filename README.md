@@ -28,6 +28,10 @@ Reviews:
 
 ## Below is what has been added by me (SylvainGa).
 
+### 2.18.5
+- Fix for crashing when too much data in the background buffer
+- Fix for not showing goal's max value on watches not having Complications
+
 ### 2.18.4
 - Made some conditional compiling so watches that don't support Complications do not include functions related to that. This is to help watches with low allocated watchface memory, like the Venu SQ, to run without crashing because of Out of Memory errors
 - Saw a weird crash in onPress so I added type checking to prevent it from happening again

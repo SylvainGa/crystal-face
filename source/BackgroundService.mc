@@ -128,7 +128,12 @@ class BackgroundService extends Sys.ServiceDelegate {
 		teslaInfo.put("httpErrorTesla", 401);
 		teslaInfo.put("httpInternalErrorTesla", responseCode);
 
-		Bg.exit({ "TeslaInfo" => teslaInfo });
+		try {
+			Bg.exit({ "TeslaInfo" => teslaInfo });
+		}
+		catch (e) {
+			Bg.exit({ "TeslaInfo" => { "httpErrorTesla" => 413, "httpInternalErrorTesla" => 413 } });
+		}
     }
 
 	(:background)
@@ -179,7 +184,12 @@ class BackgroundService extends Sys.ServiceDelegate {
 		teslaInfo.put("httpErrorTesla", (_vehicle_id == null ? 404 : 408));
 		teslaInfo.put("httpInternalErrorTesla", responseCode);
 
-		Bg.exit({ "TeslaInfo" => teslaInfo });
+		try {
+			Bg.exit({ "TeslaInfo" => teslaInfo });
+		}
+		catch (e) {
+			Bg.exit({ "TeslaInfo" => { "httpErrorTesla" => 413, "httpInternalErrorTesla" => 413 } });
+		}
     }
 
 	(:background)
@@ -198,6 +208,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 		teslaInfo.put("httpErrorTesla", responseCode);
 
         if (responseCode == 200) {
+			teslaInfo.remove("httpInternalErrorTesla");
 			teslaInfo.put("VehicleState", "online");
 
         	var response = responseData.get("response");
@@ -240,7 +251,12 @@ class BackgroundService extends Sys.ServiceDelegate {
 			}
 		}
 
-		Bg.exit({ "TeslaInfo" => teslaInfo });
+		try {
+			Bg.exit({ "TeslaInfo" => teslaInfo });
+		}
+		catch (e) {
+			Bg.exit({ "TeslaInfo" => { "httpErrorTesla" => 413, "httpInternalErrorTesla" => 413 } });
+		}
     }
 
 	(:background)
