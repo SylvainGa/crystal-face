@@ -202,7 +202,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 			teslaInfo = {};
 		}		
 		else {
-			//DEDUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
+			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
 		}
 
 		teslaInfo.put("httpErrorTesla", responseCode);
