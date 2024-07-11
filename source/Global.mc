@@ -502,7 +502,7 @@ function doTeslaComplication(complicationValue) {
 
 (:hasComplications)
 function doTeslaComplication(complicationValue) {
-	/*DEBUG*/ logMessage("Complication read: " + complicationValue);
+	//DEBUG*/ logMessage("Complication read: " + complicationValue);
 	if (complicationValue instanceof Lang.String) { // Only handle the enhance data sent, not just the battery SoC (a Number)
 		var teslaInfo = Storage.getValue("TeslaInfo");
 		if (teslaInfo == null){

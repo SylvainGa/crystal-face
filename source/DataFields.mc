@@ -157,7 +157,7 @@ class DataFields extends Ui.Drawable {
 			update(dc, /* isPartialUpdate */ false);
 		}
 		else {
-			/*DEBUG*/ logMessage("datafields draw Skipping because of burning protections");
+			//DEBUG*/ logMessage("datafields draw Skipping because of burning protections");
 		}
 	}
 
