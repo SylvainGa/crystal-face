@@ -25,11 +25,11 @@ class CrystalApp extends App.AppBase {
 	}
 
 	// function onStart(state) {
-	// 	/*DEBUG*/ logMessage("App starting");
+	// 	//DEBUG*/ logMessage("App starting");
 	// }
 
 	// function onStop(state) {
-	// 	/*DEBUG*/ logMessage("App stopping");
+	// 	//DEBUG*/ logMessage("App stopping");
 	// }
 
 	// Return the initial view of your application here

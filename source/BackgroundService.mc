@@ -98,7 +98,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 
 		if (_vehicle_id == null) {
 			//DEBUG*/ logMessage("onTemporalEvent:Getting vehicles");
-			makeWebRequest("https://" + $.getStringProperty("TeslaServerAPILocation","") + "/api/1/vehicles", null, method(:onReceiveVehicles));
+			makeWebRequest("https://" + $.getStringProperty("TeslaServerAPILocation","") + "/api/1/products?orders=true", null, method(:onReceiveVehicles));
 			return;
 		}
 
