@@ -275,7 +275,7 @@ class CrystalView extends Ui.WatchFace {
 
 					temperature = temperature.format(INTEGER_FORMAT) + "°";
 				}
-		
+
 				var humidity = $.validateNumber(weather.relativeHumidity, null);
 				if (humidity == null) {
 					humidity = "NaN";
@@ -316,8 +316,8 @@ class CrystalView extends Ui.WatchFace {
 						// Get today's sunrise/sunset times in current time zone.
 						var sunTimes = getSunTimes(myLocationArray[0], myLocationArray[1], null, /* tomorrow */ false);
 						//logMessage(sunTimes);
-						//logMessage("now=" + now); 
-						//logMessage("sunTimes=" + sunTimes); 
+						//logMessage("now=" + now);
+						//logMessage("sunTimes=" + sunTimes);
 						// If sunrise/sunset happens today.
 						var sunriseSunsetToday = ((sunTimes[0] != null) && (sunTimes[1] != null));
 						if (sunriseSunsetToday) {
@@ -331,7 +331,7 @@ class CrystalView extends Ui.WatchFace {
 				var condition = $.validateNumber(weather.condition, null);
 				if (condition != null && condition < 53) {
 					icon = (mGarminToOWM[condition]).format("%02d") + day;
-					//logMessage("icon=" + icon); 
+					//logMessage("icon=" + icon);
 				}
 				else {
 					icon = icon + day;
@@ -351,7 +351,7 @@ class CrystalView extends Ui.WatchFace {
 		}
 		Storage.setValue("WeatherInfo", result);
 		Storage.setValue("NewWeatherInfo", true);
-	}	
+	}
 
 	function updateThemeColours() {
 
@@ -417,8 +417,8 @@ class CrystalView extends Ui.WatchFace {
 
 		if (lightFlag) {
 			gMonoLightColour = Graphics.COLOR_BLACK;
-			gMonoDarkColour = /*isFr45 ? Graphics.COLOR_BLACK : */ Graphics.COLOR_DK_GRAY;			
-			
+			gMonoDarkColour = /*isFr45 ? Graphics.COLOR_BLACK : */ Graphics.COLOR_DK_GRAY;
+
 			gMeterBackgroundColour = /*isFr45 ? Graphics.COLOR_BLACK : */ Graphics.COLOR_LT_GRAY;
 			gBackgroundColour = Graphics.COLOR_WHITE;
 		} else {
@@ -449,22 +449,22 @@ class CrystalView extends Ui.WatchFace {
 	function onSettingsChangedSinceLastDraw() {
 		if (!mIsBurnInProtection) {
 
-			// Recreate background buffers for each meter, in case theme colour has changed.	
+			// Recreate background buffers for each meter, in case theme colour has changed.
 			mDrawables[:LeftGoalMeter].onSettingsChanged(0);
 			mDrawables[:RightGoalMeter].onSettingsChanged(1);
 
-			mDrawables[:MoveBar].onSettingsChanged();	
+			mDrawables[:MoveBar].onSettingsChanged();
 
-			mDataFields.onSettingsChanged();	
+			mDataFields.onSettingsChanged();
 
 			mDrawables[:Indicators].onSettingsChanged();
 		}
 
-		// If watch does not support per-second updates, and watch is sleeping, do not show seconds immediately, as they will not 
-		// update. Instead, wait for next onExitSleep(). 
-		if (PER_SECOND_UPDATES_SUPPORTED || !mIsSleeping) { 
-			setHideSeconds($.getIntProperty("HideSeconds", 0)); 
-		} 
+		// If watch does not support per-second updates, and watch is sleeping, do not show seconds immediately, as they will not
+		// update. Instead, wait for next onExitSleep().
+		if (PER_SECOND_UPDATES_SUPPORTED || !mIsSleeping) {
+			setHideSeconds($.getIntProperty("HideSeconds", 0));
+		}
 
 		mSettingsChangedSinceLastDraw = false;
 	}
@@ -503,7 +503,7 @@ class CrystalView extends Ui.WatchFace {
 	// Update each goal meter separately, then also pass types and values to data area to draw goal icons.
 	function updateGoalMeters() {
 		if (mIsBurnInProtection) {
-			return; 
+			return;
 		}
 
 		var leftType = $.getIntProperty("LeftGoalType", 0);
@@ -659,7 +659,7 @@ class CrystalView extends Ui.WatchFace {
 			case GOAL_TYPE_ACTIVE_CALORIES:
 			case GOAL_TYPE_CALORIES:
 				var fromComplication = false;
-				var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);		
+				var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
 				var profile = UserProfile.getProfile();
 				var age    = today.year - profile.birthYear;
 				var weight = profile.weight / 1000.0;
@@ -727,7 +727,7 @@ class CrystalView extends Ui.WatchFace {
 	// Clear background, clear clipping region, then draw new seconds.
 	function onPartialUpdate(dc) {
 		//Sys.println("onPartialUpdate()");
-	
+
 		mDataFields.update(dc, /* isPartialUpdate */ true);
 		mTime.drawSeconds(dc, /* isPartialUpdate */ true);
 	}
@@ -970,7 +970,7 @@ class CrystalDelegate extends Ui.WatchFaceDelegate {
 				}
 			}
 		}
-		
+
 		// Check the fields
 		var fieldCount = $.getIntProperty("FieldCount", 3);
 

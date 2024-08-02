@@ -43,7 +43,7 @@ function drawBatteryMeter(dc, x, y, width, height) {
 
 	// Fill.
 	// #8: battery returned as float. Use floor() to match native. Must match getValueForFieldType().
-	var batteryLevel = Math.floor(Sys.getSystemStats().battery);		
+	var batteryLevel = Math.floor(Sys.getSystemStats().battery);
 
 	// Fill colour based on battery level.
 	var fillColour;
@@ -62,16 +62,16 @@ function drawBatteryMeter(dc, x, y, width, height) {
 	dc.fillRectangle(
 		x - (width / 2) + lineWidthPlusMargin,
 		y - (height / 2) + lineWidthPlusMargin,
-		Math.ceil(fillWidth * (batteryLevel / 100)), 
+		Math.ceil(fillWidth * (batteryLevel / 100)),
 		height - (2 * lineWidthPlusMargin));
 }
 
 var gToggleCounter = 0; // Used to switch between charge and inside temp
 
 function writeBatteryLevel(dc, x, y, width, height, type) {
-	var batteryLevel;		
+	var batteryLevel;
 	var textColour;
-	
+
 	if (type == 0) { // Standard watch battery is being shown
 		batteryLevel = Math.floor(Sys.getSystemStats().battery);
 
@@ -97,7 +97,7 @@ function writeBatteryLevel(dc, x, y, width, height, type) {
 
 		gToggleCounter = (gToggleCounter + 1) & 7; // Increase by one, reset to 0 once 8 is reached. Called every second so incremented every second, giving a two second display of each value
 		showMode = gToggleCounter / 2;  // 0-1 is battery, 2-3 Sentry, 4-5 preconditionning, 6-7 is inside temp changed to 0 to 3
-		//logMessage("gToggleCounter=" + gToggleCounter + " showMode=" + showMode);
+		/*DEBUG*/ logMessage("gToggleCounter=" + gToggleCounter + " showMode=" + showMode);
 
 		var teslaInfo = Storage.getValue("TeslaInfo");
 		if (teslaInfo != null) {
@@ -109,9 +109,11 @@ function writeBatteryLevel(dc, x, y, width, height, type) {
 			if (httpErrorTesla != null && (httpErrorTesla == 200 || httpErrorTesla == 401 || httpErrorTesla == 408)) {
 				if (!vehicleOnline) { // If not online, only show battery and preconditionning (0 and 2)
 					showMode &= 2;
+					/*DEBUG*/ logMessage("Not online, showing Bat et P");
 				}
 
 				if (httpErrorTesla == 401) { // No access token, only show the battery (in gray, default above)
+					/*DEBUG*/ logMessage("401, sticking to Bat");
 					showMode = 0;
 				}
 				else if (!vehicleOnline || httpErrorTesla == 200) { // Vehicle not online (even if we got a 408, we'll add a "?" after the battery level to show this) or we got valid data. If the vehicle is offline, the line will show gray for stale data
@@ -172,7 +174,7 @@ function writeBatteryLevel(dc, x, y, width, height, type) {
 					case 3:
 						var insideTemp = teslaInfo.get("InsideTemp");
 						if (insideTemp != null && insideTemp != 999) {
-							value = (Sys.getDeviceSettings().temperatureUnits == Sys.UNIT_METRIC ? insideTemp.toNumber() + "°C" : ((insideTemp.toNumber() * 9) / 5 + 32).format("%d") + "°F"); 
+							value = (Sys.getDeviceSettings().temperatureUnits == Sys.UNIT_METRIC ? insideTemp.toNumber() + "°C" : ((insideTemp.toNumber() * 9) / 5 + 32).format("%d") + "°F");
 						}
 						else {
 							value = (Sys.getDeviceSettings().temperatureUnits == Sys.UNIT_METRIC ? "???°C" : "???°F");
@@ -185,10 +187,10 @@ function writeBatteryLevel(dc, x, y, width, height, type) {
 					value = httpErrorTesla.toString();
 				}
 				textColour = Graphics.COLOR_PINK; // None handled error
-			} 
+			}
 		}
 
-		//logMessage("value=" + value);		
+		//logMessage("value=" + value);
 		dc.setColor(textColour, Graphics.COLOR_TRANSPARENT);
 		dc.drawText(x - (width / 2), y - height, gNormalFont, value, Graphics.TEXT_JUSTIFY_LEFT );
 	}
@@ -259,14 +261,14 @@ function getFormattedTime(hour, min, sec) {
 		// #6 Ensure noon is shown as PM.
 		var isPm = (hour >= 12);
 		if (isPm) {
-			
+
 			// But ensure noon is shown as 12, not 00.
 			if (hour > 12) {
 				hour = hour - 12;
 			}
 			amPm = "p";
 		} else {
-			
+
 			// #27 Ensure midnight is shown as 12, not 00.
 			if (hour == 0) {
 				hour = 12;
@@ -563,7 +565,7 @@ function getSunTimes(lat, lng, tz, tomorrow) {
 	var d = Gregorian.info(now, Time.FORMAT_SHORT);
 	var rad = Math.PI / 180.0d;
 	var deg = 180.0d / Math.PI;
-	
+
 	// Calculate Julian date from Gregorian.
 	var a = Math.floor((14 - d.month) / 12);
 	var y = d.year + 4800 - a;
@@ -625,12 +627,12 @@ function getSunTimes(lat, lng, tz, tomorrow) {
 	if (cosOmega > 1) {
 		return [null, -1];
 	}
-	
+
 	// Sun never sets.
 	if (cosOmega < -1) {
 		return [-1, null];
 	}
-	
+
 	// Calculate times from omega.
 	var omega = Math.acos(cosOmega) * deg;
 	var jSet = jTransit + (omega / 360.0);
@@ -646,7 +648,8 @@ function getSunTimes(lat, lng, tz, tomorrow) {
 }
 
 //DEBUG
-(:debug, :background)
+//(:debug, :background)
+//(:background)
 function logMessage(message) {
 	var clockTime = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
 	var dateStr = clockTime.hour + ":" + clockTime.min.format("%02d") + ":" + clockTime.sec.format("%02d");
@@ -654,11 +657,9 @@ function logMessage(message) {
 }
 //DEBUG*/
 
-
-
-(:release, :background)
-function logMessage(message) {
-}
+// (:release, :background)
+// function logMessage(message) {
+// }
 
 /*
 function type_name(obj) {

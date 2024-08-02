@@ -26,7 +26,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 		var teslaInfo = Bg.getBackgroundData();
 		if (teslaInfo == null) {
 			teslaInfo = {};
-		}		
+		}
 		else {
 			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
 		}
@@ -62,7 +62,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 		else {
 			_token = null;
 		}
-		
+
 		if (_token != null && _token.equals("") == false) {
 			//DEBUG*/ var expireAt = new Time.Moment(createdAt + expiresIn); var clockTime = Gregorian.info(expireAt, Time.FORMAT_MEDIUM); var dateStr = clockTime.hour + ":" + clockTime.min.format("%02d") + ":" + clockTime.sec.format("%02d"); logMessage("initialize:Using token '" + _token.substring(0,10) + "...' which expires at " + dateStr);
 			_token = "Bearer " + _token;
@@ -84,7 +84,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 			Bg.exit(null);
 		}
 
-		if (_token == null) {					
+		if (_token == null) {
 			//DEBUG*/ logMessage("onTemporalEvent:Generating Access Token");
 			var refreshToken = $.getStringProperty("TeslaRefreshToken","");
 			if (refreshToken != null) {
@@ -113,7 +113,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 		var teslaInfo = Bg.getBackgroundData();
 		if (teslaInfo == null) {
 			teslaInfo = {};
-		}		
+		}
 		else {
 			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveToken: Buffer has keys " + keys);
 		}
@@ -143,7 +143,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 		var teslaInfo = Bg.getBackgroundData();
 		if (teslaInfo == null) {
 			teslaInfo = {};
-		}		
+		}
 		else {
 			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicles: Buffer has keys " + keys);
 		}
@@ -200,7 +200,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 		var teslaInfo = Bg.getBackgroundData();
 		if (teslaInfo == null) {
 			teslaInfo = {};
-		}		
+		}
 		else {
 			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
 		}
@@ -222,12 +222,12 @@ class BackgroundService extends Sys.ServiceDelegate {
 	        	result = response.get("climate_state");
 	        	if (result != null) {
 					teslaInfo.put("InsideTemp", result.get("inside_temp"));
-				}	        	
-				
+				}
+
 	        	result = response.get("vehicle_state");
 	        	if (result != null) {
 					teslaInfo.put("SentryEnabled", result.get("sentry_mode"));
-				}	        	
+				}
         	}
 	    }
 		// If no vehicle (rare) or can't contact (much more frequent) is received, try to get a new vehicle (404) or retrieve its state (408)
@@ -288,7 +288,8 @@ class BackgroundService extends Sys.ServiceDelegate {
 					},
             :responseType => Comms.HTTP_RESPONSE_CONTENT_TYPE_JSON
         };
-		//2023-03-05 logMessage("makeWebRequest url: '" + url + "'");
+		//DEBUG*/ logMessage("makeWebRequest url: '" + url + "'");
+		//DEBUG*/ logMessage("makeWebRequest options: '" + options + "'");
 		Comms.makeWebRequest(url, params, options, callback);
     }
 }
