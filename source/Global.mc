@@ -97,7 +97,7 @@ function writeBatteryLevel(dc, x, y, width, height, type) {
 
 		gToggleCounter = (gToggleCounter + 1) & 7; // Increase by one, reset to 0 once 8 is reached. Called every second so incremented every second, giving a two second display of each value
 		showMode = gToggleCounter / 2;  // 0-1 is battery, 2-3 Sentry, 4-5 preconditionning, 6-7 is inside temp changed to 0 to 3
-		/*DEBUG*/ logMessage("gToggleCounter=" + gToggleCounter + " showMode=" + showMode);
+		//DEBUG*/ logMessage("gToggleCounter=" + gToggleCounter + " showMode=" + showMode);
 
 		var teslaInfo = Storage.getValue("TeslaInfo");
 		if (teslaInfo != null) {
@@ -109,11 +109,11 @@ function writeBatteryLevel(dc, x, y, width, height, type) {
 			if (httpErrorTesla != null && (httpErrorTesla == 200 || httpErrorTesla == 401 || httpErrorTesla == 408)) {
 				if (!vehicleOnline) { // If not online, only show battery and preconditionning (0 and 2)
 					showMode &= 2;
-					/*DEBUG*/ logMessage("Not online, showing Bat et P");
+					//DEBUG*/ logMessage("Not online, showing Bat et P");
 				}
 
 				if (httpErrorTesla == 401) { // No access token, only show the battery (in gray, default above)
-					/*DEBUG*/ logMessage("401, sticking to Bat");
+					//DEBUG*/ logMessage("401, sticking to Bat");
 					showMode = 0;
 				}
 				else if (!vehicleOnline || httpErrorTesla == 200) { // Vehicle not online (even if we got a 408, we'll add a "?" after the battery level to show this) or we got valid data. If the vehicle is offline, the line will show gray for stale data
@@ -224,12 +224,12 @@ function updateComplications(complicationName, storageName, index, complicationT
 			// DEBUG */ if (type == Complications.COMPLICATION_TYPE_HIGH_LOW_TEMPERATURE) { logMessage("Last one before us"); }
 
 			if (type == complicationType && type != Complications.COMPLICATION_TYPE_INVALID) {
-				/*DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
+				//DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
 				complicationId = new Complications.Id(complicationType);
 				break;
 			}
 			else if (type == Complications.COMPLICATION_TYPE_INVALID && complicationId.longLabel != null && complicationId.longLabel.equals(complicationName)) {
-				/*DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
+				//DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
 				complicationId = complicationId.complicationId;
 				break;
 			}
