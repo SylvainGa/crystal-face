@@ -34,7 +34,7 @@ class CrystalApp extends App.AppBase {
 
 	// Return the initial view of your application here
 	function getInitialView() {
-		/*DEBUG*/ logMessage("Getting initial view");
+		//DEBUG*/ logMessage("Getting initial view");
 
 		if (WatchUi has :WatchFaceDelegate) {
 			mView = new CrystalView();
@@ -102,7 +102,7 @@ class CrystalApp extends App.AppBase {
 			}
 		}
 		else {
-			/*DEBUG*/ logMessage("Unexpected invalid receivedData: " + receivedData);
+			//DEBUG*/ logMessage("Unexpected invalid receivedData: " + receivedData);
 		}
 
 		// Copy into their own name some of the entries in TeslaInfo, then delete from TeslaInfo
@@ -135,7 +135,7 @@ class CrystalApp extends App.AppBase {
 			}
 		}
 
-		/*DEBUG*/ var nextTime = Time.now().add(new Time.Duration(5 * 60)); var local = Gregorian.info(nextTime, Time.FORMAT_SHORT); var time = $.getFormattedTime(local.hour, local.min, local.sec); 		logMessage("Next event: " + time[:hour] + ":" + time[:min] + ":" + time[:sec] + time[:amPm]);
+		//DEBUG*/ var nextTime = Time.now().add(new Time.Duration(5 * 60)); var local = Gregorian.info(nextTime, Time.FORMAT_SHORT); var time = $.getFormattedTime(local.hour, local.min, local.sec); 		logMessage("Next event: " + time[:hour] + ":" + time[:min] + ":" + time[:sec] + time[:amPm]);
 		Bg.registerForTemporalEvent(new Time.Duration(5 * 60)); // Since onSettingsChanged go for a specific time, go for duration here once we get going, otherwise we'll get background data only once the view is shown
 
 		Ui.requestUpdate();

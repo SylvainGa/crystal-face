@@ -19,7 +19,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 		Sys.ServiceDelegate.initialize();
 
 		if (Storage.getValue("Tesla") == null || gTeslaComplication == true) {
-			/*DEBUG*/ logMessage("returning because Storage.getValue(\"Tesla\") is " + Storage.getValue("Tesla") + " or gTeslaComplication is " + gTeslaComplication);
+			//DEBUG*/ logMessage("returning because Storage.getValue(\"Tesla\") is " + Storage.getValue("Tesla") + " or gTeslaComplication is " + gTeslaComplication);
 			return;
 		}
 
@@ -28,7 +28,7 @@ class BackgroundService extends Sys.ServiceDelegate {
 			teslaInfo = {};
 		}		
 		else {
-			/*DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
+			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
 		}
 
 		var timeNow = Time.now().value();
@@ -80,24 +80,24 @@ class BackgroundService extends Sys.ServiceDelegate {
 	(:background)
 	function onTemporalEvent() {
 		if (!Sys.getDeviceSettings().phoneConnected) {
-			/*DEBUG*/ logMessage("Our phone isn't connected, bailing out");
+			//DEBUG*/ logMessage("Our phone isn't connected, bailing out");
 			Bg.exit(null);
 		}
 
 		if (_token == null) {					
-			/*DEBUG*/ logMessage("onTemporalEvent:Generating Access Token");
+			//DEBUG*/ logMessage("onTemporalEvent:Generating Access Token");
 			var refreshToken = $.getStringProperty("TeslaRefreshToken","");
 			if (refreshToken != null) {
 				makeWebPost(refreshToken, method(:onReceiveToken));
 			} else {
-				/*DEBUG*/ logMessage("onTemporalEvent:No refresh token!");
+				//DEBUG*/ logMessage("onTemporalEvent:No refresh token!");
 				Bg.exit({ "TeslaInfo" => { "httpErrorTesla" => 401, "httpInternalErrorTesla" => 401 } });
 			}
 			return;
 		}
 
 		if (_vehicle_id == null) {
-			/*DEBUG*/ logMessage("onTemporalEvent:Getting vehicles");
+			//DEBUG*/ logMessage("onTemporalEvent:Getting vehicles");
 			makeWebRequest("https://" + $.getStringProperty("TeslaServerAPILocation","") + "/api/1/products?orders=true", null, method(:onReceiveVehicles));
 			return;
 		}
@@ -108,14 +108,14 @@ class BackgroundService extends Sys.ServiceDelegate {
 
 	(:background)
     function onReceiveToken(responseCode, responseData) {
-		/*DEBUG*/ logMessage("onReceiveToken: " + responseCode);
+		//DEBUG*/ logMessage("onReceiveToken: " + responseCode);
 
 		var teslaInfo = Bg.getBackgroundData();
 		if (teslaInfo == null) {
 			teslaInfo = {};
 		}		
 		else {
-			/*DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveToken: Buffer has keys " + keys);
+			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveToken: Buffer has keys " + keys);
 		}
 
         if (responseCode == 200) {
@@ -138,14 +138,14 @@ class BackgroundService extends Sys.ServiceDelegate {
 
 	(:background)
     function onReceiveVehicles(responseCode, responseData) {
-		/*DEBUG*/ logMessage("onReceiveVehicles: " + responseCode);
+		//DEBUG*/ logMessage("onReceiveVehicles: " + responseCode);
 
 		var teslaInfo = Bg.getBackgroundData();
 		if (teslaInfo == null) {
 			teslaInfo = {};
 		}		
 		else {
-			/*DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicles: Buffer has keys " + keys);
+			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicles: Buffer has keys " + keys);
 		}
 
         if (responseCode == 200) {
@@ -194,15 +194,15 @@ class BackgroundService extends Sys.ServiceDelegate {
 
 	(:background)
     function onReceiveVehicleData(responseCode, responseData) {
-		/*DEBUG*/ logMessage("onReceiveVehicleData: " + responseCode);
-        /*DEBUG*/ var myStats = Sys.getSystemStats(); logMessage("Total memory: " + myStats.totalMemory + " Used memory: " + myStats.usedMemory + " Free memory: " + myStats.freeMemory);
+		//DEBUG*/ logMessage("onReceiveVehicleData: " + responseCode);
+        //DEBUG*/ var myStats = Sys.getSystemStats(); logMessage("Total memory: " + myStats.totalMemory + " Used memory: " + myStats.usedMemory + " Free memory: " + myStats.freeMemory);
 
 		var teslaInfo = Bg.getBackgroundData();
 		if (teslaInfo == null) {
 			teslaInfo = {};
 		}		
 		else {
-			/*DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
+			//DEBUG*/ var keys = teslaInfo.keys(); logMessage("onReceiveVehicleData: Buffer has keys " + keys);
 		}
 
 		teslaInfo.put("httpErrorTesla", responseCode);
