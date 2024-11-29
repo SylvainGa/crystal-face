@@ -651,8 +651,8 @@ function getSunTimes(lat, lng, tz, tomorrow) {
 }
 
 //DEBUG
-//(:debug, :background)
-(:background)
+(:debug, :background)
+//(:background)
 function logMessage(message) {
 	var clockTime = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
 	var dateStr = clockTime.hour + ":" + clockTime.min.format("%02d") + ":" + clockTime.sec.format("%02d");
@@ -660,7 +660,7 @@ function logMessage(message) {
 }
 //DEBUG*/
 
-(:release, :background)
+(:release)
 function logMessage(message) {
 }
 
