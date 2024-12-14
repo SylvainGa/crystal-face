@@ -28,7 +28,7 @@ Reviews:
 
 ## Below is what has been added by me (SylvainGa).
 ### 2.20.1
-- No changes. Only added back Enduro3 and new Fenix8 watches (including Fenix E).
+- No code changes. Only added back Enduro3 and new Fenix8 watches (including Fenix E).
 
 ### 2.20.0
 - Compiled with CIQ 7.3.1
