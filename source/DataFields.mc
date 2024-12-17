@@ -463,7 +463,8 @@ class DataFields extends Ui.Drawable {
 					}
 				}
 				info = ActivityMonitor.getInfo();
-				if (value.equals("") == true && (info has :timeToRecovery)) {
+				var t = (info has :timeToRecovery);
+				if (value.equals("") == true && t == true) {
 					var recoveryTyime = info.timeToRecovery;
 					if (recoveryTyime != null) {
 						value = recoveryTyime.format(INTEGER_FORMAT);
