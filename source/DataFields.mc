@@ -157,7 +157,7 @@ class DataFields extends Ui.Drawable {
 			update(dc, /* isPartialUpdate */ false);
 		}
 		else {
-			/*DEBUG*/ logMessage("datafields draw Skipping because of burning protections");
+			//DEBUG*/ logMessage("datafields draw Skipping because of burning protections");
 		}
 	}
 
@@ -812,7 +812,7 @@ class DataFields extends Ui.Drawable {
 				if (mWeather == null || Storage.getValue("NewWeatherInfo") != null) { 
 					mWeather = Storage.getValue("OpenWeatherMapCurrent");
 					Storage.deleteValue("NewWeatherInfo");
-					/*DEBUG*/ logMessage("getValueForFieldType:new weather data: " + mWeather);
+					//DEBUG*/ logMessage("getValueForFieldType:new weather data: " + mWeather);
 				}
 
 				// Stored weather data available.
@@ -828,7 +828,7 @@ class DataFields extends Ui.Drawable {
 							value = value.format(INTEGER_FORMAT) + "°";
 						}
 						catch (e) {
-							/*DEBUG*/ logMessage("getValueForFieldType: Caught exception " + e);
+							//DEBUG*/ logMessage("getValueForFieldType: Caught exception " + e);
 							value = "???";
 						}
 						result["weatherIcon"] = mWeather["icon"];
@@ -848,7 +848,7 @@ class DataFields extends Ui.Drawable {
 					}
 				}
 
-				/*DEBUG*/ logMessage("getValueForFieldType:Weather value is " + value + " stale is " + stale);
+				//DEBUG*/ logMessage("getValueForFieldType:Weather value is " + value + " stale is " + stale);
 				break;
 
 			case FIELD_TYPE_PRESSURE:

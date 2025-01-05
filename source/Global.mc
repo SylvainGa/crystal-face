@@ -227,12 +227,12 @@ function updateComplications(complicationName, storageName, index, complicationT
 			// DEBUG */ if (type == Complications.COMPLICATION_TYPE_HIGH_LOW_TEMPERATURE) { logMessage("Last one before us"); }
 
 			if (type == complicationType && type != Complications.COMPLICATION_TYPE_INVALID) {
-				/*DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
+				//DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
 				complicationId = new Complications.Id(complicationType);
 				break;
 			}
 			else if (type == Complications.COMPLICATION_TYPE_INVALID && complicationId.longLabel != null && complicationId.longLabel.equals(complicationName)) {
-				/*DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
+				//DEBUG*/logMessage(complicationId.longLabel.toString() + " available");
 				complicationId = complicationId.complicationId;
 				break;
 			}
@@ -246,7 +246,7 @@ function updateComplications(complicationName, storageName, index, complicationT
 				Complications.subscribeToUpdates(complicationId);
 			}
 			catch (e) {
-				/*DEBUG*/ logMessage("Error subscribing to complication " + complicationName);
+				//DEBUG*/ logMessage("Error subscribing to complication " + complicationName);
 			}
 		}
 	}
@@ -517,7 +517,7 @@ function doTeslaComplication(complicationValue) {
 
 (:hasComplications)
 function doTeslaComplication(complicationValue) {
-	/*DEBUG*/ logMessage("Complication read: " + complicationValue);
+	//DEBUG*/ logMessage("Complication read: " + complicationValue);
 	if (complicationValue instanceof Lang.String) { // Only handle the enhance data sent, not just the battery SoC (a Number)
 		var teslaInfo = Storage.getValue("TeslaInfo");
 		if (teslaInfo == null){
@@ -651,8 +651,8 @@ function getSunTimes(lat, lng, tz, tomorrow) {
 }
 
 //DEBUG
-//(:debug, :background)
-(:background)
+(:debug, :background)
+//(:background)
 function logMessage(message) {
 	var clockTime = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
 	var dateStr = clockTime.hour + ":" + clockTime.min.format("%02d") + ":" + clockTime.sec.format("%02d");
@@ -660,9 +660,9 @@ function logMessage(message) {
 }
 //DEBUG*/
 
-// (:release, :background)
-// function logMessage(message) {
-// }
+(:release, :background)
+function logMessage(message) {
+}
 
 /*
 function type_name(obj) {
