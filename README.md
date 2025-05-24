@@ -30,7 +30,7 @@ Reviews:
 
 ### 2.21.1
 - Compiled with CIQ 8.1.1
-- Added new devices: Approach50, Descent G2, Forerunner 570s/970 and VivoActive6
+- Added new devices: Approach50, Descent G2, Forerunner 570s/970 and VivoActive 6
 - Added changes from flowstatedev - Support long press of live HR field to open HR glance and fixed some strings file that got daved in UTF8-BOM instead of plain UTF8 somehow
 
 ### 2.21.0
