@@ -27,6 +27,12 @@ Reviews:
 - Video review in Spanish, by Sergio: https://www.youtube.com/watch?v=TZFhnm_y1MM.
 
 ## Below is what has been added by me (SylvainGa).
+
+### 2.21.1
+- Compiled with CIQ 8.1.1
+- Added new devices: Approach50, Descent G2, Forerunner 570s/970 and VivoActive6
+- Added changes from flowstatedev - Support long press of live HR field to open HR glance and fixed some strings file that got daved in UTF8-BOM instead of plain UTF8 somehow
+
 ### 2.21.0
 - Compiled with CIQ 7.4.3
 - By requests, OpenWeatherMap IS BACK! (as a weather service). This service, unlike Garmin, can display the weather station but relies on the last activity with GPS or default latitude/longitude entered in the app parameters for location (fallback in case there is no activity with GPS). Clear the "OpenWeatherMap API Key Override" field in the Settings to revert to Garmin Weather (the default is back to OWM). Like before, this weather data is pulled at intervals (5 minutes). 
