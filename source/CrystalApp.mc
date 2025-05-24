@@ -42,7 +42,7 @@ class CrystalApp extends App.AppBase {
 
 	// Return the initial view of your application here
 	function getInitialView() {
-		/*DEBUG*/ logMessage("Getting initial view");
+		//DEBUG*/ logMessage("Getting initial view");
 
 		if (WatchUi has :WatchFaceDelegate) {
 			mView = new CrystalView();
@@ -94,19 +94,19 @@ class CrystalApp extends App.AppBase {
 
 	(:background)
 	function onBackgroundData(data) {
-		/*DEBUG*/ logMessage("onBackgroundData:received '" + data + "'");
+		//DEBUG*/ logMessage("onBackgroundData:received '" + data + "'");
 		var pendingWebRequests = Storage.getValue("PendingWebRequests");
 		if (pendingWebRequests == null) {
 			pendingWebRequests = {};
 		}
 
 		if (data == null) {
-			/*DEBUG*/ logMessage("onBackgroundData:data is null");
+			//DEBUG*/ logMessage("onBackgroundData:data is null");
 			return;
 		}
 
 		if (data.isEmpty()) {
-			/*DEBUG*/ logMessage("onBackgroundData:Empty data");
+			//DEBUG*/ logMessage("onBackgroundData:Empty data");
 			return;
 		}
 
@@ -140,7 +140,7 @@ class CrystalApp extends App.AppBase {
 
 		Storage.setValue("PendingWebRequests", pendingWebRequests);
 
-		/*DEBUG*/ logMessage("onBackgroundData:Flag that requests are pending");
+		//DEBUG*/ logMessage("onBackgroundData:Flag that requests are pending");
 		Storage.setValue("RequestsPending", true);
 		Ui.requestUpdate();
 	}
