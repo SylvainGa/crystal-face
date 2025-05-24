@@ -117,6 +117,7 @@ class DataFields extends Ui.Drawable {
 								 {"type" => FIELD_FLOOR_CLIMBED, "complicationType" => Complications.COMPLICATION_TYPE_FLOORS_CLIMBED},
 								 {"type" => FIELD_TYPE_PULSE_OX, "complicationType" => Complications.COMPLICATION_TYPE_PULSE_OX},
 								 {"type" => FIELD_TYPE_HEART_RATE, "complicationType" => Complications.COMPLICATION_TYPE_HEART_RATE},
+								 {"type" => FIELD_TYPE_HR_LIVE_5S, "complicationType" => Complications.COMPLICATION_TYPE_HEART_RATE},
 								 {"type" => FIELD_RECOVERY_TIME, "complicationType" => Complications.COMPLICATION_TYPE_RECOVERY_TIME},
 								 {"type" => FIELD_TYPE_ALTITUDE, "complicationType" => Complications.COMPLICATION_TYPE_ALTITUDE},
 								 {"type" => FIELD_TYPE_WEATHER, "complicationType" => Complications.COMPLICATION_TYPE_CURRENT_WEATHER}, // Only for onPress. We do nothing with what is returned since it's missing the temperature. Adding it would require a too big change and extra space in App class for basically no gain
