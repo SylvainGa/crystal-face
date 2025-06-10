@@ -1,6 +1,6 @@
 <strings>
     <string id="AppName">Crystal</string>
-    <string id="AppNameVersion">Crystal-Tesla V2.21.1.b0</string>
+    <string id="AppNameVersion">Crystal-Tesla V2.22.0.b0</string>
 
 	<string id="ThemeTitle">Theme</string>
 	<string id="HoursColourTitle">Hours Colour</string>
@@ -17,6 +17,7 @@
 	<string id="HideSecondsLowPower">Hide seconds when inactive</string>
 	<string id="HideSecondsAlways">Always hide seconds</string>
 	<string id="HideHoursLeadingZeroTitle">Hide Hours Leading Zero</string>
+	<string id="HideDayLeadingZeroTitle">Hide Day Leading Zero</string>
 	<string id="AddColon">Add colon between hours and minutes</string>
 
 	<string id="FieldCountTitle">Number Of Data Fields</string>

@@ -233,6 +233,10 @@
 		<settingConfig type="boolean"/>
 	</setting>
 
+	<setting propertyKey="@Properties.HideDayLeadingZero" title="@Strings.HideDayLeadingZeroTitle">
+		<settingConfig type="boolean"/>
+	</setting>
+
 	<setting propertyKey="@Properties.AddColon" title="@Strings.AddColon">
 		<settingConfig type="boolean"/>
 	</setting>

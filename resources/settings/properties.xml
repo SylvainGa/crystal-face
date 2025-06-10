@@ -27,6 +27,7 @@
 	<property id="HoursColourOverride" type="number">0</property>
 	<property id="MinutesColourOverride" type="number">0</property>
 	<property id="HideHoursLeadingZero" type="boolean">true</property>
+	<property id="HideDayLeadingZero" type="boolean">true</property>
 	<property id="AddColon" type="boolean">false</property>
 	<property id="HideSeconds" type="number">0</property>
 

@@ -87,7 +87,8 @@ class DateLine extends Ui.Drawable {
 			mMonthString = Ui.loadResource(resourceArray[mMonth - 1]).toUpper();
 		}
 
-		var day = now.day.format(INTEGER_FORMAT);
+		var day = now.day.format($.getBoolProperty("HideDayLeadingZero", true) ? INTEGER_FORMAT : "%02d");
+
 		if (mYLine2 != null) {
 			drawDoubleLine(dc, day);
 		} else {

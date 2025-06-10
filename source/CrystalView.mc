@@ -110,7 +110,7 @@ class CrystalView extends Ui.WatchFace {
 
 		mMoveBarType = {};
 
-		/*DEBUG*/ logMessage("View:Initialize");
+		//DEBUG*/ logMessage("View:Initialize");
 	}
 
 	function burnInProtectionIsOrWasActive() {
@@ -151,7 +151,7 @@ class CrystalView extends Ui.WatchFace {
 	// the state of this View and prepare it to be shown. This includes
 	// loading resources into memory. */
 	function onShow() {
-		/*DEBUG*/ logMessage("View showing");
+		//DEBUG*/ logMessage("View showing");
 	}
 
 	// Set flag to respond to settings change on next full draw (onUpdate()), as we may be in 1Hz (lower power) mode, and cannot
@@ -245,10 +245,10 @@ class CrystalView extends Ui.WatchFace {
 				// Events scheduled for a time in the past trigger immediately.
 				var nextTime = lastTime.add(new Time.Duration(5 * 60));
 
-				/*DEBUG*/ var local = Gregorian.info(nextTime, Time.FORMAT_SHORT); var time = $.getFormattedTime(local.hour, local.min, local.sec); logMessage("Next temporal event at " + time[:hour] + ":" + time[:min] + ":" + time[:sec] + time[:amPm]);
+				//DEBUG*/ var local = Gregorian.info(nextTime, Time.FORMAT_SHORT); var time = $.getFormattedTime(local.hour, local.min, local.sec); logMessage("Next temporal event at " + time[:hour] + ":" + time[:min] + ":" + time[:sec] + time[:amPm]);
 				Bg.registerForTemporalEvent(nextTime);
 			} else {
-				/*DEBUG*/ logMessage("Next Temporal Events should happen NOW");
+				//DEBUG*/ logMessage("Next Temporal Events should happen NOW");
 				Bg.registerForTemporalEvent(Time.now());
 			}
 		}
@@ -306,7 +306,7 @@ class CrystalView extends Ui.WatchFace {
 		if (pendingWebRequests == null) {
 			pendingWebRequests = {};
 		}
-		/*DEBUG*/ logMessage("checkPendingWebRequests: pendingWebRequest=" + pendingWebRequests);
+		//DEBUG*/ logMessage("checkPendingWebRequests: pendingWebRequest=" + pendingWebRequests);
 		// 1. Weather:
 		// Location must be available, weather or humidity (#113) data field must be shown.
 		if ((gLocationLat != null) &&
@@ -314,11 +314,11 @@ class CrystalView extends Ui.WatchFace {
 
 			var owmKeyOverride = $.getStringProperty("OWMKeyOverride","");
 			if (owmKeyOverride == null || owmKeyOverride.length() == 0) {
-				/*DEBUG*/ logMessage("checkPendingWebRequests:Using Garmin Weather so skipping OWM code");
+				//DEBUG*/ logMessage("checkPendingWebRequests:Using Garmin Weather so skipping OWM code");
 			} else {
 				//2022-04-10 logMessage("Using OpenWeatherMap");
 				var owmCurrent = Storage.getValue("OpenWeatherMapCurrent");
-				/*DEBUG*/ logMessage("checkPendingWebRequests:owmCurrent=" + owmCurrent);
+				//DEBUG*/ logMessage("checkPendingWebRequests:owmCurrent=" + owmCurrent);
 				// No existing data.
 				if (owmCurrent == null) {
 					pendingWebRequests["OpenWeatherMapCurrent"] = true;
@@ -352,7 +352,7 @@ class CrystalView extends Ui.WatchFace {
 		// 2. Tesla:
 		if (Storage.getValue("Tesla") != null) {
 			var teslaInfo = Storage.getValue("TeslaInfo");
-			/*DEBUG*/ logMessage("checkPendingWebRequests:teslaInfo=" + teslaInfo);
+			//DEBUG*/ logMessage("checkPendingWebRequests:teslaInfo=" + teslaInfo);
 			if (teslaInfo != null) { // We got Tesla data, process it
 				var arrayKey = ["RefreshToken", "AccessToken", "TokenCreatedAt", "TokenExpiresIn", "VehicleID"];
 				var arrayProp = [true, true, false, false, false ];
@@ -485,19 +485,19 @@ class CrystalView extends Ui.WatchFace {
 				}
 				else {
 					icon = icon + day;
-					/*DEBUG*/ logMessage("Icon index " + condition + " is invalid");
+					//DEBUG*/ logMessage("Icon index " + condition + " is invalid");
 				}
 				result = { "cod" => 200, "temp" => temperature, "humidity" => humidity, "icon" => icon };
-				/*DEBUG*/ logMessage("Weather is " + result);
+				//DEBUG*/ logMessage("Weather is " + result);
 			}
 			else {
 				result = { "cod" => 404 };
-				/*DEBUG*/ logMessage("No weather data, returning cod = 404");
+				//DEBUG*/ logMessage("No weather data, returning cod = 404");
 			}
 		}
 		else {
 			result = { "cod" => 400 };
-			/*DEBUG*/ logMessage("No weather data, returning cod = 400");
+			//DEBUG*/ logMessage("No weather data, returning cod = 400");
 		}
 		Storage.setValue("OpenWeatherMapCurrent", result);
 		Storage.setValue("NewWeatherInfo", true);
@@ -642,7 +642,7 @@ class CrystalView extends Ui.WatchFace {
 		// Do we have requests pending?
 		var requestsPending = Storage.getValue("RequestsPending");
 		if (requestsPending != null) {
-			/*DEBUG*/ logMessage("onUpdate:Requests are pending");
+			//DEBUG*/ logMessage("onUpdate:Requests are pending");
 			Storage.deleteValue("RequestsPending");
 			checkPendingWebRequests();
 		}
@@ -873,7 +873,7 @@ class CrystalView extends Ui.WatchFace {
 			values[:isValid] = false;
 		}
 		if (values[:isValid] && (!(values[:current] instanceof Lang.Number || values[:current] instanceof Lang.Float))) {
-			/*DEBUG*/ logMessage("values[:current] is invalid=" + values[:current]);
+			//DEBUG*/ logMessage("values[:current] is invalid=" + values[:current]);
 			values[:current] = 0;
 			values[:isValid] = false;
 		}
@@ -895,7 +895,7 @@ class CrystalView extends Ui.WatchFace {
 	// state of this View here. This includes freeing resources from
 	// memory */
 	function onHide() {
-		/*DEBUG*/ logMessage("View hidding");
+		//DEBUG*/ logMessage("View hidding");
 	}
 
 	// The user has just looked at their watch. Timers and animations may be started here.
@@ -910,7 +910,7 @@ class CrystalView extends Ui.WatchFace {
 		}
 
 		ReadWeather(false);
-		/*DEBUG*/ logMessage("onExitSleep:Checking pending requests");
+		//DEBUG*/ logMessage("onExitSleep:Checking pending requests");
 		checkPendingWebRequests();
 
 		// If watch requires burn-in protection, set flag to false when entering sleep.
@@ -981,11 +981,11 @@ class CrystalView extends Ui.WatchFace {
 		var complicationShortLabel = complication.shortLabel;
 		var complicationValue = complication.value;
 
-		/*DEBUG*/ var complicationLongLabel = complication.longLabel; if (complicationType == Complications.COMPLICATION_TYPE_INVALID) { logMessage("Type: " + complicationType + " short label: " + complicationShortLabel + " long label: " + complicationLongLabel + " Value:" + complicationValue); }
+		//DEBUG*/ var complicationLongLabel = complication.longLabel; if (complicationType == Complications.COMPLICATION_TYPE_INVALID) { logMessage("Type: " + complicationType + " short label: " + complicationShortLabel + " long label: " + complicationLongLabel + " Value:" + complicationValue); }
 
 		if (gTeslaComplication == true && complicationType == Complications.COMPLICATION_TYPE_INVALID) {
 			if (complicationShortLabel != null && complicationShortLabel.equals("TeslaLink")) {
-				/*DEBUG*/ logMessage("Doing Tesla Complication!");
+				//DEBUG*/ logMessage("Doing Tesla Complication!");
 				$.doTeslaComplication(complicationValue);
 			}
 		}

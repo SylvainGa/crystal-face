@@ -28,6 +28,9 @@ Reviews:
 
 ## Below is what has been added by me (SylvainGa).
 
+### 2.22.0
+- At request, there is now an option to have the date format to have a leading zero when there is only one digit.
+
 ### 2.21.1
 - Compiled with CIQ 8.1.1
 - Added new devices: Approach50, Descent G2, Forerunner 570s/970 and VivoActive 6
