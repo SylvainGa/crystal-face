@@ -28,6 +28,10 @@ Reviews:
 
 ## Below is what has been added by me (SylvainGa).
 
+### 2.23.0
+- Compiled with CIQ 8.2.1
+- Added new device: Venu X1
+
 ### 2.22.0
 - At request, there is now an option to have the date format to have a leading zero when there is only one digit.
 
