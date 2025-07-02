@@ -128,5 +128,6 @@
 	<string id="TeslaLink">Get Tesla info from Tesla-Link Complications</string>
 	<string id="TeslaVehicleIndex">Which vehicle to show?</string>
 	<string id="ShowWeatherStationName">Show weather station name?</string>
-	<string id="ComplicationName">Complication Long Name</string>
+	<string id="ComplicationName">Default Complication Long Name</string>
+	<string id="BatteryComplicationName">Battery Complication Long Name</string>
 </strings>
