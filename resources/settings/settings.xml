@@ -34,7 +34,11 @@
 		<settingConfig type="boolean"/>
 	</setting>
 
-	<setting propertyKey="@Properties.ComplicationName" title="@Strings.ComplicationName">
+	<setting propertyKey="@Properties.DefComplicationName" title="@Strings.ComplicationName">
+		<settingConfig type="alphaNumeric" maxLength="64"/>
+	</setting>
+
+	<setting propertyKey="@Properties.BatteryComplicationName" title="@Strings.BatteryComplicationName">
 		<settingConfig type="alphaNumeric" maxLength="64"/>
 	</setting>
 

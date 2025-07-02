@@ -1048,43 +1048,49 @@ class CrystalDelegate extends Ui.WatchFaceDelegate {
 
 	public function onPress(clickEvent as Ui.ClickEvent) as Lang.Boolean {
 		var co_ords = clickEvent.getCoordinates();
-        //DEBUG*/ logMessage("onPress called with x:" + co_ords[0] + ", y:" + co_ords[1]);
+        /*DEBUG*/ logMessage("onPress called with x:" + co_ords[0] + ", y:" + co_ords[1]);
 
 		// returns the complicationId within the boundingBoxes
 		if (Toybox has :Complications && App.getApp().getView().useComplications()) {
 			if (mView != null && mView.mDrawables != null && mView.mDataFields != null) { // Saw an unexpected error because one of these were null, although it shouldn't have happened
-				var defComplicationName = $.getStringProperty("ComplicationName", "");
 				var complicationId = checkBoundingBoxes(co_ords);
-				if (complicationId != null) {
+				if (complicationId != null && complicationId.getType() != Complications.COMPLICATION_TYPE_BATTERY) {
+					/*DEBUG*/ logMessage("Launching built-in complication");
 					try {
 						Complications.exitTo(complicationId);
 					}
 					catch (e) {}
 				}
-				else if (defComplicationName.length() > 0 ) {
-					// We're outside our hotspots, see if we can launch our Flashlight
-					var iter = Complications.getComplications();
-					if (iter == null) {
-						return;
-					}
-					complicationId = iter.next();
-
-					while (complicationId != null) {
-						//logMessage(complicationId.longLabel.toString());
-						if ((complicationId.getType() == Complications.COMPLICATION_TYPE_INVALID && complicationId.longLabel != null && complicationId.longLabel.equals(defComplicationName))) {
-							//DEBUG*/ logMessage("Found our flashlight complication");
-							complicationId = complicationId.complicationId;
-							//DEBUG*/ logMessage("complicationId is '" + complicationId + "'");
-							if (complicationId != null) { // Got a crash caused by a null complicationId (while holding over 'Steps' while in a indoor walk activity)
-								try {
-									Complications.exitTo(complicationId);
-								}
-								catch (e) {}
-
-								return;
-							}
+				else {
+					var complicationName = (complicationId != null ? $.getStringProperty("BatteryComplicationName", "") : $.getStringProperty("DefComplicationName", ""));
+					if (complicationName.length() > 0 ) {
+						// See if we should launch our external complications (default hotspot or battery widget)
+						var iter = Complications.getComplications();
+						if (iter == null) {
+							return;
 						}
 						complicationId = iter.next();
+
+						while (complicationId != null) {
+							//DEBUG*/ logMessage(complicationId.longLabel.toString());
+							if ((complicationId.getType() == Complications.COMPLICATION_TYPE_INVALID && complicationId.longLabel != null && complicationId.longLabel.equals(complicationName))) {
+								/*DEBUG*/ logMessage("Found our " + complicationName + " complication");
+								complicationId = complicationId.complicationId;
+								/*DEBUG*/ logMessage("complicationId is '" + complicationId + "'");
+								if (complicationId != null) { // Got a crash caused by a null complicationId (while holding over 'Steps' while in a indoor walk activity)
+									try {
+										/*DEBUG*/ logMessage("Launching " + complicationName + " complication");
+										Complications.exitTo(complicationId);
+									}
+									catch (e) {
+										/*DEBUG*/ logMessage("Failed to launch the " + complicationName + " complication, assertion is " + e);
+									}
+
+									return;
+								}
+							}
+							complicationId = iter.next();
+						}
 					}
 				}
 			}

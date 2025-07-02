@@ -123,7 +123,8 @@ class DataFields extends Ui.Drawable {
 								 {"type" => FIELD_TYPE_WEATHER, "complicationType" => Complications.COMPLICATION_TYPE_CURRENT_WEATHER}, // Only for onPress. We do nothing with what is returned since it's missing the temperature. Adding it would require a too big change and extra space in App class for basically no gain
 								 {"type" => FIELD_TYPE_SUNRISE_SUNSET, "complicationType" => Complications.COMPLICATION_TYPE_SUNRISE}, // Only for onPress. We do nothing with what is returned since it's missing the temperature. Adding it would require a too big change and extra space in App class for basically no gain
 								 {"type" => FIELD_TYPE_CALORIES, "complicationType" => Complications.COMPLICATION_TYPE_CALORIES},
-								 {"type" => FIELD_TYPE_ACTIVE_CALORIES, "complicationType" => Complications.COMPLICATION_TYPE_CALORIES}
+								 {"type" => FIELD_TYPE_ACTIVE_CALORIES, "complicationType" => Complications.COMPLICATION_TYPE_CALORIES},
+								 {"type" => FIELD_TYPE_BATTERY, "complicationType" => Complications.COMPLICATION_TYPE_BATTERY}
 								];
 
 			var fieldTypes = view.mFieldTypes;

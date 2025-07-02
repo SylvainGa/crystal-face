@@ -1,6 +1,6 @@
 <strings>
     <string id="AppName">Crystal</string>
-    <string id="AppNameVersion">Crystal-Tesla V2.22.0.b0</string>
+    <string id="AppNameVersion">Crystal-Tesla V2.23.0.b1</string>
 
 	<string id="ThemeTitle">Theme</string>
 	<string id="HoursColourTitle">Hours Colour</string>
@@ -127,7 +127,8 @@
 	<string id="TeslaLink">Get Tesla info from Tesla-Link Complications</string>
 	<string id="TeslaVehicleIndex">Which vehicle to show?</string>
 	<string id="ShowWeatherStationName">Show weather station name?</string>
-	<string id="ComplicationName">Complication Long Name</string>
+	<string id="ComplicationName">Default Complication Long Name</string>
+	<string id="BatteryComplicationName">Battery Complication Long Name</string>
 
 	<string id="latitude">Latitude</string>
 	<string id="longitude">Longitude</string>
