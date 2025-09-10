@@ -51,6 +51,7 @@ epix2pro47mm.sourcePath = $(epix2pro47mm.sourcePath);always-on-source
 epix2pro51mm.sourcePath = $(epix2pro51mm.sourcePath);always-on-source
 fenix843mm.sourcePath = $(fenix843mm.sourcePath);always-on-source
 fenix847mm.sourcePath = $(fenix847mm.sourcePath);always-on-source
+fenix8pro47mm.sourcePath = $(fenix8pro47mm.sourcePath);always-on-source
 fenixe.sourcePath = $(fenixe.sourcePath);always-on-source
 vivoactive5.sourcePath = $(vivoactive5.sourcePath);always-on-source
 descentmk343mm.sourcePath = $(descentmk343mm.sourcePath);always-on-source
@@ -61,7 +62,6 @@ fr57042mm.sourcePath = $(fr57042mm.sourcePath);always-on-source
 fr57047mm.sourcePath = $(fr57047mm.sourcePath);always-on-source
 fr970.sourcePath = $(fr970.sourcePath);always-on-source
 vivoactive6.sourcePath = $(vivoactive6.sourcePath);always-on-source
-
 
 base.excludeAnnotations = lowMemoryWatchface;bkgnd32kb;noComplications
 descentmk2.excludeAnnotations = lowMemoryWatchface;bkgnd64kb;hasComplications

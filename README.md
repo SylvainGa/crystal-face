@@ -28,6 +28,10 @@ Reviews:
 
 ## Below is what has been added by me (SylvainGa).
 
+### 2.23.1
+- Compiled with CIQ 8.2.3
+- Added new device: Fenix 8 Pro 47 mm
+
 ### 2.23.0
 - Option to lauch a battery widget when the battery icon is held on Complication enabled devices
 
