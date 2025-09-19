@@ -29,7 +29,7 @@ Reviews:
 ## Below is what has been added by me (SylvainGa).
 
 ### 2.23.1
-- Added devices Venu 4 41 and 45 mm devices
+- Added Venu 4 41 and 45 mm devices
 
 ### 2.23.1
 - Compiled with CIQ 8.2.3
